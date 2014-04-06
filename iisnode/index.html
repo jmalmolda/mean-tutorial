@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>iisnode logs</title>
+    <style type="text/css">
+        body
+        {
+            font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;
+        }
+        table
+        {
+            border-collapse: collapse;
+        }
+        td, th
+        {
+            border: 1px solid lightgray;
+            padding: 3px 7px 2px 7px;
+        }
+        th
+        {
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 4px;
+            background-color: Gray;
+            color: #ffffff;
+        }
+        td.stderr
+        {
+            color: Red;
+        }
+    </style>
+</head>
+<body>
+    <table id="logFilesTable">
+        <tr>
+            <th>
+                Computer name
+            </th>
+            <th>
+                PID
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Link
+            </th>
+        </tr>
+    </table>
+    <p id="lastUpdated"></p>
+    <script type="text/javascript">
+
+        // this is replaced with actual data at runtime by code in interceptor.js
+        var logFiles = [{"file":"JM-ACER-4100-stderr-1395686326062.txt","computername":"JM-ACER","pid":4100,"type":"stderr","created":1395686326062},{"file":"JM-ACER-4100-stdout-1395686326061.txt","computername":"JM-ACER","pid":4100,"type":"stdout","created":1395686326061},{"file":"JM-ACER-4464-stderr-1395686332454.txt","computername":"JM-ACER","pid":4464,"type":"stderr","created":1395686332454},{"file":"JM-ACER-4464-stdout-1395686332452.txt","computername":"JM-ACER","pid":4464,"type":"stdout","created":1395686332452},{"file":"JM-ACER-4988-stderr-1396186935811.txt","computername":"JM-ACER","pid":4988,"type":"stderr","created":1396186935811},{"file":"JM-ACER-4988-stdout-1396186935809.txt","computername":"JM-ACER","pid":4988,"type":"stdout","created":1396186935809},{"file":"JM-ACER-7272-stderr-1396813032860.txt","computername":"JM-ACER","pid":7272,"type":"stderr","created":1396813032860},{"file":"JM-ACER-7272-stdout-1396813032781.txt","computername":"JM-ACER","pid":7272,"type":"stdout","created":1396813032781},{"file":"JM-ACER-7944-stderr-1396811829818.txt","computername":"JM-ACER","pid":7944,"type":"stderr","created":1396811829818},{"file":"JM-ACER-7944-stdout-1396811829815.txt","computername":"JM-ACER","pid":7944,"type":"stdout","created":1396811829815}];
+        var lastUpdated = 1396813043747;
+        var date = new Date();
+
+        date.setTime(lastUpdated);
+        document.getElementById('lastUpdated').innerHTML = 'Index was last updated ' + date;
+
+        logFiles.sort(function (a, b) {
+            return b.created - a.created;
+        });
+
+        var logFilesTable = document.getElementById("logFilesTable");
+        for (var i = 0; i < logFiles.length; i++) {
+            var logFile = logFiles[i];
+            date.setTime(logFile.created);
+            var row = logFilesTable.insertRow(-1);
+            var computerNameCell = row.insertCell(0);
+            var pidCell = row.insertCell(1);
+            var typeCell = row.insertCell(2);
+            var dateCell = row.insertCell(3);
+            var logCell = row.insertCell(4);
+            computerNameCell.innerHTML = logFile.computername;
+            pidCell.innerHTML = logFile.pid.toString();
+            typeCell.innerHTML = logFile.type;
+            typeCell.setAttribute('class', logFile.type);
+            dateCell.innerHTML = date.toString();
+            logCell.innerHTML = '<a href="' + logFile.file + '">log</a>';
+        };
+
+    </script>
+</body>
+</html>
